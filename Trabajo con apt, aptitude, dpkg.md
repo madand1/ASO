@@ -37,8 +37,8 @@ Con el cual obtendremos la siguiente información:
 1. ¿Cómo puedes sacar información de un paquete oficial instalado o que no este instalado?
 
 - Para sacar los paquetes instalados:
-'''
-root@autentica-plantilla:~# **apt show netcat-openbsd** 
+
+'''root@autentica-plantilla:~# **apt show netcat-openbsd** 
 Package: netcat-openbsd
 Version: 1.219-1
 Priority: optional
@@ -65,14 +65,11 @@ Description: TCP/IP swiss army knife
  several interesting built-in capabilities.
  .
  This package contains the OpenBSD rewrite of netcat, including support for
- IPv6, proxies, and Unix sockets.
-
-'''
+ IPv6, proxies, and Unix sockets.'''
 
 - Para paquetes no instalados:
 
-'''
-root@autentica-plantilla:~# **apt-cache show apache2**
+'''root@autentica-plantilla:~# **apt-cache show apache2**
 Package: apache2
 Version: 2.4.62-1~deb12u1
 Installed-Size: 573
@@ -127,13 +124,11 @@ Section: httpd
 Priority: optional
 Filename: pool/updates/main/a/apache2/apache2_2.4.61-1~deb12u1_amd64.deb
 Size: 222088
-SHA256: 531548edb3e768efc652f288e6e9f916e7f0f3188feb5dceb08bed3d086845bb
-
-'''
+SHA256: 531548edb3e768efc652f288e6e9f916e7f0f3188feb5dceb08bed3d086845bb'''
 
 5. Saca toda la información que puedas del paquete openssh-client que tienes actualmente instalado en tu máquina.
-'''
-root@autentica-plantilla:~# **apt show openssh-client**
+
+'''root@autentica-plantilla:~# **apt show openssh-client**
 Package: openssh-client
 Version: 1:9.2p1-2+deb12u3
 Priority: standard
@@ -175,15 +170,13 @@ Description: Cliente del protocolo "Secure Shell" (SSH) para acceso seguro a má
  un permiso especial.
  .
  ssh reemplaza a las aplicaciones no seguras rsh, rcp y rlogin, 
- obsoletas para la mayoría de los propósitos.
-
- '''
+ obsoletas para la mayoría de los propósitos. '''
 
 
 6. Saca toda la información que puedas del paquete openssh-client candidato a actualizar en tu máquina.
 
-'''
-root@autentica-plantilla:~# **apt-cache policy openssh-client**
+
+'''root@autentica-plantilla:~# **apt-cache policy openssh-client**
 openssh-client:
   Instalados: 1:9.2p1-2+deb12u3
   Candidato:  1:9.2p1-2+deb12u3
@@ -191,14 +184,13 @@ openssh-client:
  *** 1:9.2p1-2+deb12u3 500
         500 http://deb.debian.org/debian bookworm/main amd64 Packages
         500 http://security.debian.org/debian-security bookworm-security/main amd64 Packages
-        100 /var/lib/dpkg/status
-'''
+        100 /var/lib/dpkg/status'''
 
 7. Lista todo el contenido referente al paquete openssh-client actual de tu máquina. Utiliza para ello tanto dpkg como apt.
 
 - Primero vamos a listar los archivos instalados:
-'''
-root@autentica-plantilla:~# **dpkg -L openssh-client**
+
+'''root@autentica-plantilla:~# **dpkg -L openssh-client**
 /.
 /etc
 /etc/ssh
@@ -262,13 +254,11 @@ root@autentica-plantilla:~# **dpkg -L openssh-client**
 /usr/share/man/man8/ssh-sk-helper.8.gz
 /usr/bin/slogin
 /usr/lib/systemd/user/graphical-session-pre.target.wants/ssh-agent.service
-/usr/share/man/man1/slogin.1.gz
-'''
+/usr/share/man/man1/slogin.1.gz '''
 
 - Segundo vamos a mostarr la información del paquete:
 
-'''
-root@autentica-plantilla:~# **apt show openssh-client**
+'''root@autentica-plantilla:~# **apt show openssh-client**
 Package: openssh-client
 Version: 1:9.2p1-2+deb12u3
 Priority: standard
@@ -310,8 +300,7 @@ Description: Cliente del protocolo "Secure Shell" (SSH) para acceso seguro a má
  un permiso especial.
  .
  ssh reemplaza a las aplicaciones no seguras rsh, rcp y rlogin, 
- obsoletas para la mayoría de los propósitos.
- '''
+ obsoletas para la mayoría de los propósitos.'''
 
 
 
@@ -397,24 +386,28 @@ lrwxrwxrwx root/root         0 2024-06-22 21:38 ./usr/bin/slogin -> ssh
 lrwxrwxrwx root/root         0 2024-06-22 21:38 ./usr/lib/systemd/user/graphical-session-pre.target.wants/ssh-agent.service -> ../ssh-agent.service
 lrwxrwxrwx root/root         0 2024-06-22 21:38 ./usr/share/man/man1/slogin.1.gz -> ssh.1.gz
 '''
+
 9.  Simula la instalación del paquete openssh-client.
 
 Esto mopstarrar que pasa si se instala openssh-client, sin realizar ningun tipo de cambio real en el sistema, esto nos es util paara verificar que no haya ningún tipo de conflicto, y tambien para ver que dependencías nos hara falta.
 
+'''
 root@autentica-plantilla:~# **apt-get --dry-run install openssh-client**
 Leyendo lista de paquetes... Hecho
 Creando árbol de dependencias... Hecho
 Leyendo la información de estado... Hecho
 openssh-client ya está en su versión más reciente (1:9.2p1-2+deb12u3).
 0 actualizados, 0 nuevos se instalarán, 0 para eliminar y 0 no actualizados.
+'''
 
 10. ¿Qué comando te informa de los posible bugs que presente un determinado paquete?
 
+'''
 root@autentica-plantilla:~# **apt list --bugs openssh-client**
 Listando... Hecho
 openssh-client/stable,stable-security,now 1:9.2p1-2+deb12u3 amd64 [instalado]
 root@autentica-plantilla:~# apt list --reportbug openssh-client
-
+'''
 
 11.  Después de realizar un apt update && apt upgrade. Si quisieras actualizar únicamente los paquetes que tienen de cadena openssh. ¿Qué procedimiento seguirías?. Realiza esta acción, con las estructuras repetitivas que te ofrece bash, así como con el comando xargs.
 
@@ -422,6 +415,7 @@ Lo haría con el siguiente comando:
 
 **apt list --upgradable | grep openssh | cut -d '/' -f 1 | xargs apt install -y**
 
+'''
 root@autentica-plantilla:~# apt list --upgradable | grep openssh | cut -d '/' -f 1 | xargs apt install -y
 
 WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
@@ -430,6 +424,7 @@ Leyendo lista de paquetes... Hecho
 Creando árbol de dependencias... Hecho
 Leyendo la información de estado... Hecho
 0 actualizados, 0 nuevos se instalarán, 0 para eliminar y 0 no actualizados.
+'''
 
 Con esto tendriamos la lista de los paquetes que contienen "openssh" y los actualiza automaticamente.
 
@@ -439,6 +434,7 @@ Con el comando **apt-cache rdepnds <nombre_del_paquete>**
 
 Si lo hacemos como ejemplo, en openssh-client, nos saldra lo siguiente:
 
+'''
 root@autentica-plantilla:~# apt-cache rdepends openssh-client
 openssh-client
 Reverse Depends:
@@ -572,7 +568,7 @@ Reverse Depends:
  |autossh
   apt-dater
  |ansible-core
-
+'''
 
 13.  ¿Cómo procederías para encontrar el paquete al que pertenece un determinado fichero?
 
@@ -581,8 +577,10 @@ Usando el siguiinet comando **dpkg -S ruta_del_archivo**
 
 Ejemplo:
 
+'''
 root@autentica-plantilla:~# dpkg -S /usr/bin/ssh
 openssh-client: /usr/bin/ssh
+'''
 
 14. ¿Que procedimientos emplearías para liberar la caché en cuanto a descargas de paquetería?
 
@@ -594,16 +592,18 @@ openssh-client: /usr/bin/ssh
 
 Para ello lo que haremso ser acrear una variable de entorno, para que no nos pida permiso de configuracion:
 
+'''
 root@autentica-plantilla:~# DEBIAN_FRONTEND=noninteractive apt install keyboard-configuration
 Leyendo lista de paquetes... Hecho
 Creando árbol de dependencias... Hecho
 Leyendo la información de estado... Hecho
 keyboard-configuration ya está en su versión más reciente (1.221).
 0 actualizados, 0 nuevos se instalarán, 0 para eliminar y 0 no actualizados.
-
+'''
 
 16. Reconfigura el paquete locales de tu equipo, añadiendo una localización que no exista previamente. Comprueba a modificar las variables de entorno correspondientes para que la sesión del usuario utilice otra localización.
 
+'''
 root@autentica-plantilla:~# dpkg-reconfigure locales
 Generating locales (this might take a while)...
   aa_DJ.UTF-8... done
@@ -615,21 +615,22 @@ Generating locales (this might take a while)...
   af_ZA.ISO-8859-1... done
   agr_PE.UTF-8... done
   ak_GH.UTF-8... done
-
+'''
 
 Y a la hora de comprobación, pondemos lo siguiente que sera ajustar la sesion del usuario para que use la nueva localización:
 
+'''
 root@autentica-plantilla:~# export LANG=en_US.UTF-8
 root@autentica-plantilla:~# export LC_ALL=en_US.UTF-8
 -bash: aviso: setlocale: LC_ALL: no se puede cambiar el local (en_US.UTF-8)
-
+'''
 
 
 17. Interrumpe la configuración de un paquete y explica los pasos a dar para continuar la instalación.
 
 Para continuar la instalacion de algún meteremos el siguinet comando:
 
-**sudo dpkg --configure -a**
+'''**sudo dpkg --configure -a**'''
 
 esto lo que hace es renaudar cualquier paquete que haya quedado en un estado inconsciente.
 
@@ -643,6 +644,7 @@ Usaria esta:
 Con esto lo que conseguimos es actualizar los paquetes del sistema sin soliciatr interaccion.
 Verificación:
 
+'''
 root@autentica-plantilla:~# A_AMDRE_DEL_TOPO=noninteractive apt full-upgrade -y
 Reading package lists... Done
 Building dependency tree... Done
@@ -650,19 +652,21 @@ Reading state information... Done
 Calculating upgrade... Done
 0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
 root@autentica-plantilla:~# 
-
+'''
 19. Bloquea la actualización de determinados paquetes.
 
 Para bloquear la actualización de un paquete especifico, usare:
 
-**sudo apt-mark hold <nombre_paquete>**
+'''**sudo apt-mark hold <nombre_paquete>**'''
 
 Vamos a comprobarlo con openssh-client, con lo que evitaremos que sea actualizado cuando hagamos unh upgrade.
 
 
 Verificación:
 
+'''
 root@autentica-plantilla:~# apt-mark hold openssh-client
 openssh-client set on hold.
 root@autentica-plantilla:~# 
+'''
 
