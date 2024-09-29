@@ -673,3 +673,120 @@ openssh-client set on hold.
 root@autentica-plantilla:~# 
 '
 
+# Trabajo con ficheros .deb
+
+1. Descarga un paquete sin instalarlo, es decir, descarga el fichero .deb correspondiente. Indica diferentes formas de hacerlo.
+
+Para descarga un paquete sin instalar, usaremos el comando **apt-get download**
+
+Ejemplo: 
+
+'''root@autentica-plantilla:~# apt-get download flatpak
+Get:1 http://deb.debian.org/debian bookworm/main amd64 flatpak amd64 1.14.10-1~deb12u1 [1400 kB]
+Fetched 1400 kB in 0s (4468 kB/s)
+W: Download is performed unsandboxed as root as file '/root/flatpak_1.14.10-1~deb12u1_amd64.deb' couldn't be accessed by user '_apt'. - pkgAcquire::Run (13: Permission denied)
+'''
+
+O podemos usar el wget para hacerlo directamente de la URL. **wget URL**
+
+
+2. ¿Cómo puedes ver el contenido, que no extraerlo, de lo que se instalará en el sistema de un paquete deb?
+
+Usando el comando **dpkg --contents <paquete_en_cuestion>**
+
+verificación:
+
+'''
+root@autentica-plantilla:~# dpkg --contents flatpak_1.14.10-1~deb12u1_amd64.deb 
+drwxr-xr-x root/root         0 2024-08-14 16:49 ./
+drwxr-xr-x root/root         0 2024-08-14 16:49 ./etc/
+drwxr-xr-x root/root         0 2024-08-14 16:49 ./etc/X11/
+drwxr-xr-x root/root         0 2024-08-14 16:49 ./etc/X11/Xsession.d/
+-rw-r--r-- root/root       851 2024-08-14 16:49 ./etc/X11/Xsession.d/20flatpak
+drwxr-xr-x root/root         0 2024-08-14 16:49 ./etc/profile.d/
+-rw-r--r-- root/root       851 2024-08-14 16:49 ./etc/profile.d/flatpak.sh
+drwxr-xr-x root/root         0 2024-08-14 16:49 ./lib/
+drwxr-xr-x root/root         0 2024-08-14 16:49 ./lib/systemd/
+drwxr-xr-x root/root         0 2024-08-14 16:49 ./lib/systemd/system/
+-rw-r--r-- root/root       263 2024-08-14 16:49 ./lib/systemd/system/flatpak-system-helper.service
+drwxr-xr-x root/root         0 2024-08-14 16:49 ./usr/
+drwxr-xr-x root/root         0 2024-08-14 16:49 ./usr/bin/
+-rwxr-xr-x root/root   1410896 2024-08-14 16:49 ./usr/bin/flatpak
+drwxr-xr-x root/root         0 2024-08-14 16:49 ./usr/lib/
+drwxr-xr-x root/root         0 2024-08-14 16:49 ./usr/lib/systemd/
+drwxr-xr-x root/root         0 2024-08-14 16:49 ./usr/lib/systemd/system-environment-generators/
+'''
+3. Sobre el fichero .deb descargado, utiliza el comando ar. ar permite extraer el contenido de una paquete deb. Indica el procedimiento para visualizar con ar el   contenido del paquete deb. Con el paquete que has descargado y utilizando el comando ar, descomprime el paquete. ¿Qué información dispones después de la extracción?. Indica la finalidad de lo extraído e indica el procedimiento para descomprimir lo extraído por ar del punto anterior. ¿Qué información contiene?
+
+- Listar el contenido del .deb
+'''  
+root@autentica-plantilla:~# ar t flatpak_1.14.10-1~deb12u1_amd64.deb
+debian-binary
+control.tar.xz
+data.tar.xz
+'''
+- Extraer el contenido del .deb
+'''root@autentica-plantilla:~# ar x flatpak_1.14.10-1~deb12u1_amd64.deb '''
+- ver contenido del control.tar.xz 
+  '''oot@autentica-plantilla:~# tar -xf control.tar.xz
+root@autentica-plantilla:~# cat control
+Package: flatpak
+Version: 1.14.10-1~deb12u1
+Architecture: amd64
+Maintainer: Utopia Maintenance Team <pkg-utopia-maintainers@lists.alioth.debian.org>
+Installed-Size: 7377
+Depends: adduser, bubblewrap (>= 0.8.0-2+deb12u1~), bubblewrap (<< 0.8.1~) | bubblewrap (>= 0.10.0~), fuse3, xdg-dbus-proxy (>= 0.1.0), libappstream4 (>= 0.10.0), libarchive13 (>= 3.0.4), libc6 (>= 2.34), libcurl3-gnutls (>= 7.16.2), libdconf1 (>= 0.26.0), libfuse3-3 (>= 3.2.3), libgdk-pixbuf-2.0-0 (>= 2.22.0), libglib2.0-0 (>= 2.67.3+git20210214), libgpgme11 (>= 1.1.8), libjson-glib-1.0-0 (>= 1.5.2), libmalcontent-0-0 (>= 0.6.0), libostree-1-1 (>= 2020.8), libpolkit-agent-1-0 (>= 0.105), libpolkit-gobject-1-0 (>= 0.101), libseccomp2 (>= 2.5.2), libsystemd0, libxau6 (>= 1:1.0.9), libxml2 (>= 2.7.4), libzstd1 (>= 1.5.2)
+Recommends: ca-certificates, default-dbus-system-bus | dbus-system-bus, desktop-file-utils, hicolor-icon-theme, gtk-update-icon-cache, libpam-systemd, p11-kit, polkitd | policykit-1, shared-mime-info, xdg-desktop-portal (>= 1.6), xdg-desktop-portal-gtk (>= 1.6) | xdg-desktop-portal-backend, xdg-user-dirs
+Suggests: avahi-daemon, malcontent-gui
+Conflicts: xdg-app
+Replaces: xdg-app
+Section: admin
+Priority: optional
+Homepage: https://flatpak.org/
+Description: Application deployment framework for desktop apps
+ Flatpak installs, manages and runs sandboxed desktop application bundles.
+ Application bundles run partially isolated from the wider system, using
+ containerization techniques such as namespaces to prevent direct access
+ to system resources. Resources from outside the sandbox can be accessed
+ via "portal" services, which are responsible for access control; for
+ example, the Documents portal displays an "Open" dialog outside the
+ sandbox, then allows the application to access only the selected file.
+ .
+ Each application uses a specified "runtime", or set of libraries, which is
+ available as /usr inside its sandbox. This can be used to run application
+ bundles with multiple, potentially incompatible sets of dependencies within
+ the same desktop environment.
+ .
+ This package contains the services and executables needed to install and
+ launch sandboxed applications, and the portal services needed to provide
+ limited access to resources outside the sandbox.
+root@autentica-plantilla:~# 
+'''
+
+- Ver contenido del data
+
+'''
+root@autentica-plantilla:~# tar -xf data.tar.xz
+root@autentica-plantilla:~# ls -l
+total 3764
+-rw-r--r-- 1 root root      56 Aug 14 16:49 conffiles
+-rw-r--r-- 1 root root    2275 Aug 14 16:49 control
+-rw-r--r-- 1 root root    5308 Sep 29 20:44 control.tar.xz
+-rw-r--r-- 1 root root 1394364 Sep 29 20:44 data.tar.xz
+-rw-r--r-- 1 root root       4 Sep 29 20:44 debian-binary
+drwxr-xr-x 4 root root    4096 Aug 14 16:49 etc
+-rw-r--r-- 1 root root 1399864 Aug 14 22:28 flatpak_1.14.10-1~deb12u1_amd64.deb
+drwxr-xr-x 3 root root    4096 Aug 14 16:49 lib
+-rw-r--r-- 1 root root    9082 Aug 14 16:49 md5sums
+-rw-r--r-- 1 root root  990808 Jun 24 15:34 openssh-client_1%3a9.2p1-2+deb12u3_amd64.deb
+-rwxr-xr-x 1 root root    1079 Aug 14 16:49 postinst
+-rwxr-xr-x 1 root root     641 Aug 14 16:49 postrm
+-rwxr-xr-x 1 root root     473 Aug 14 16:49 preinst
+-rwxr-xr-x 1 root root     223 Aug 14 16:49 prerm
+drwxr-xr-x 6 root root    4096 Aug 14 16:49 usr
+drwxr-xr-x 3 root root    4096 Aug 14 16:49 var
+root@autentica-plantilla:~# 
+'''
+
+
+Esto lo que nos muetra es el contenido .deb que hemos extradio, cada archivo y directorio que podemos ver tiene una función especifica denrtro del paquete.
