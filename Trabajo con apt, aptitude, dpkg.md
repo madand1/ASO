@@ -716,6 +716,7 @@ drwxr-xr-x root/root         0 2024-08-14 16:49 ./usr/lib/
 drwxr-xr-x root/root         0 2024-08-14 16:49 ./usr/lib/systemd/
 drwxr-xr-x root/root         0 2024-08-14 16:49 ./usr/lib/systemd/system-environment-generators/
 '''
+
 3. Sobre el fichero .deb descargado, utiliza el comando ar. ar permite extraer el contenido de una paquete deb. Indica el procedimiento para visualizar con ar el   contenido del paquete deb. Con el paquete que has descargado y utilizando el comando ar, descomprime el paquete. ¿Qué información dispones después de la extracción?. Indica la finalidad de lo extraído e indica el procedimiento para descomprimir lo extraído por ar del punto anterior. ¿Qué información contiene?
 
 - Listar el contenido del .deb
