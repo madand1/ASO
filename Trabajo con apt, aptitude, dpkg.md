@@ -38,7 +38,8 @@ Con el cual obtendremos la siguiente información:
 
 - Para sacar los paquetes instalados:
 
-'''root@autentica-plantilla:~# **apt show netcat-openbsd** 
+'''
+root@autentica-plantilla:~# **apt show netcat-openbsd** 
 Package: netcat-openbsd
 Version: 1.219-1
 Priority: optional
@@ -65,7 +66,9 @@ Description: TCP/IP swiss army knife
  several interesting built-in capabilities.
  .
  This package contains the OpenBSD rewrite of netcat, including support for
- IPv6, proxies, and Unix sockets.'''
+ IPv6, proxies, and Unix sockets.
+ 
+ '''
 
 - Para paquetes no instalados:
 
@@ -664,9 +667,9 @@ Vamos a comprobarlo con openssh-client, con lo que evitaremos que sea actualizad
 
 Verificación:
 
-'''
+'
 root@autentica-plantilla:~# apt-mark hold openssh-client
 openssh-client set on hold.
 root@autentica-plantilla:~# 
-'''
+'
 
