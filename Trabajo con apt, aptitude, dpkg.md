@@ -4,7 +4,7 @@
 
 1. Que acciones consigo al realizar apt update y apt upgrade. Explica detalladamente.
 
-**apt update**: Actualiza el índice de paquetes disponibles desde los repositorios configurados en /etc/apt/sources.list. 
+```**apt update**```: Actualiza el índice de paquetes disponibles desde los repositorios configurados en /etc/apt/sources.list. 
                 No instala ni actualiza paquetes,solo descarga las listas de versiones disponibles de los paquetes.
 
             - Detalle del proceso:
@@ -12,7 +12,7 @@
                                 No actualiza ni instala nada, solo informa de los posibles paquetes que tienen versiones nuevas.
 
 
-**apt upgrade**: Actualiza todos los paquetes que tienen una versión más reciente, pero sin eliminar paquetes instalados ni instalar nuevos paquetes.
+```**apt upgrade**```: Actualiza todos los paquetes que tienen una versión más reciente, pero sin eliminar paquetes instalados ni instalar nuevos paquetes.
             
             - Detalle del proceso:
                                 Se descarga la versión actualizada de los paquetes instalados que tienen una nueva versión disponible.  
@@ -21,7 +21,7 @@
 . 
 2. Lista la relación de paquetes que pueden ser actualizados. ¿Qué información puedes sacar a tenor de lo mostrado en el listado?.
 
-Usaremos el comando **apt list --upgradable**
+Usaremos el comando ```**apt list --upgradable**```
 
 Con el cual obtendremos la siguiente información:
 
@@ -34,11 +34,11 @@ Con el cual obtendremos la siguiente información:
 
 ![Version ssh](img/ssh_version.png)
 
-1. ¿Cómo puedes sacar información de un paquete oficial instalado o que no este instalado?
+4. ¿Cómo puedes sacar información de un paquete oficial instalado o que no este instalado?
 
 - Para sacar los paquetes instalados:
 
-'''
+```
 root@autentica-plantilla:~# **apt show netcat-openbsd** 
 Package: netcat-openbsd
 Version: 1.219-1
@@ -68,11 +68,12 @@ Description: TCP/IP swiss army knife
  This package contains the OpenBSD rewrite of netcat, including support for
  IPv6, proxies, and Unix sockets.
  
- '''
+```
 
 - Para paquetes no instalados:
 
-'''root@autentica-plantilla:~# **apt-cache show apache2**
+```
+root@autentica-plantilla:~# **apt-cache show apache2**
 Package: apache2
 Version: 2.4.62-1~deb12u1
 Installed-Size: 573
@@ -127,11 +128,13 @@ Section: httpd
 Priority: optional
 Filename: pool/updates/main/a/apache2/apache2_2.4.61-1~deb12u1_amd64.deb
 Size: 222088
-SHA256: 531548edb3e768efc652f288e6e9f916e7f0f3188feb5dceb08bed3d086845bb'''
+SHA256: 531548edb3e768efc652f288e6e9f916e7f0f3188feb5dceb08bed3d086845bb
+```
 
 5. Saca toda la información que puedas del paquete openssh-client que tienes actualmente instalado en tu máquina.
 
-'''root@autentica-plantilla:~# **apt show openssh-client**
+```
+root@autentica-plantilla:~# **apt show openssh-client**
 Package: openssh-client
 Version: 1:9.2p1-2+deb12u3
 Priority: standard
@@ -173,13 +176,15 @@ Description: Cliente del protocolo "Secure Shell" (SSH) para acceso seguro a má
  un permiso especial.
  .
  ssh reemplaza a las aplicaciones no seguras rsh, rcp y rlogin, 
- obsoletas para la mayoría de los propósitos. '''
+ obsoletas para la mayoría de los propósitos. 
+ ```
 
 
 6. Saca toda la información que puedas del paquete openssh-client candidato a actualizar en tu máquina.
 
 
-'''root@autentica-plantilla:~# **apt-cache policy openssh-client**
+```
+root@autentica-plantilla:~# **apt-cache policy openssh-client**
 openssh-client:
   Instalados: 1:9.2p1-2+deb12u3
   Candidato:  1:9.2p1-2+deb12u3
@@ -187,13 +192,15 @@ openssh-client:
  *** 1:9.2p1-2+deb12u3 500
         500 http://deb.debian.org/debian bookworm/main amd64 Packages
         500 http://security.debian.org/debian-security bookworm-security/main amd64 Packages
-        100 /var/lib/dpkg/status'''
+        100 /var/lib/dpkg/status
+```
 
 7. Lista todo el contenido referente al paquete openssh-client actual de tu máquina. Utiliza para ello tanto dpkg como apt.
 
 - Primero vamos a listar los archivos instalados:
 
-'''root@autentica-plantilla:~# **dpkg -L openssh-client**
+```
+root@autentica-plantilla:~# **dpkg -L openssh-client**
 /.
 /etc
 /etc/ssh
@@ -257,11 +264,13 @@ openssh-client:
 /usr/share/man/man8/ssh-sk-helper.8.gz
 /usr/bin/slogin
 /usr/lib/systemd/user/graphical-session-pre.target.wants/ssh-agent.service
-/usr/share/man/man1/slogin.1.gz '''
+/usr/share/man/man1/slogin.1.gz 
+```
 
 - Segundo vamos a mostarr la información del paquete:
 
-'''root@autentica-plantilla:~# **apt show openssh-client**
+```
+root@autentica-plantilla:~# **apt show openssh-client**
 Package: openssh-client
 Version: 1:9.2p1-2+deb12u3
 Priority: standard
@@ -303,7 +312,8 @@ Description: Cliente del protocolo "Secure Shell" (SSH) para acceso seguro a má
  un permiso especial.
  .
  ssh reemplaza a las aplicaciones no seguras rsh, rcp y rlogin, 
- obsoletas para la mayoría de los propósitos.'''
+ obsoletas para la mayoría de los propósitos.
+ ```
 
 
 
@@ -313,16 +323,16 @@ Para listar el contendio de un paquete **.deb** sin instalarlo o descargarlo:
 
 Descargar un paquete sin instalarlo:
 
-'''
+```
 root@autentica-plantilla:~# **apt-get download openssh-client**
 Des:1 http://deb.debian.org/debian bookworm/main amd64 openssh-client amd64 1:9.2p1-2+deb12u3 [991 kB]
 Descargados 991 kB en 0s (3.821 kB/s)
 W: Download is performed unsandboxed as root as file '/root/openssh-client_1%3a9.2p1-2+deb12u3_amd64.deb' couldn't be accessed by user '_apt'. - pkgAcquire::Run (13: Permiso denegado)
-'''
+```
 
 Listar el contenido sin instarlo:
 
-'''
+```
 root@autentica-plantilla:~# **dpkg --contents openssh-client_1%3a9.2p1-2+deb12u3_amd64.deb**
 drwxr-xr-x root/root         0 2024-06-22 21:38 ./
 drwxr-xr-x root/root         0 2024-06-22 21:38 ./etc/
@@ -388,37 +398,37 @@ drwxr-xr-x root/root         0 2024-06-22 21:38 ./usr/share/man/man8/
 lrwxrwxrwx root/root         0 2024-06-22 21:38 ./usr/bin/slogin -> ssh
 lrwxrwxrwx root/root         0 2024-06-22 21:38 ./usr/lib/systemd/user/graphical-session-pre.target.wants/ssh-agent.service -> ../ssh-agent.service
 lrwxrwxrwx root/root         0 2024-06-22 21:38 ./usr/share/man/man1/slogin.1.gz -> ssh.1.gz
-'''
+```
 
 9.  Simula la instalación del paquete openssh-client.
 
 Esto mopstarrar que pasa si se instala openssh-client, sin realizar ningun tipo de cambio real en el sistema, esto nos es util paara verificar que no haya ningún tipo de conflicto, y tambien para ver que dependencías nos hara falta.
 
-'''
+```
 root@autentica-plantilla:~# **apt-get --dry-run install openssh-client**
 Leyendo lista de paquetes... Hecho
 Creando árbol de dependencias... Hecho
 Leyendo la información de estado... Hecho
 openssh-client ya está en su versión más reciente (1:9.2p1-2+deb12u3).
 0 actualizados, 0 nuevos se instalarán, 0 para eliminar y 0 no actualizados.
-'''
+```
 
 10. ¿Qué comando te informa de los posible bugs que presente un determinado paquete?
 
-'''
+```
 root@autentica-plantilla:~# **apt list --bugs openssh-client**
 Listando... Hecho
 openssh-client/stable,stable-security,now 1:9.2p1-2+deb12u3 amd64 [instalado]
 root@autentica-plantilla:~# apt list --reportbug openssh-client
-'''
+```
 
 11.  Después de realizar un apt update && apt upgrade. Si quisieras actualizar únicamente los paquetes que tienen de cadena openssh. ¿Qué procedimiento seguirías?. Realiza esta acción, con las estructuras repetitivas que te ofrece bash, así como con el comando xargs.
 
 Lo haría con el siguiente comando:
 
-**apt list --upgradable | grep openssh | cut -d '/' -f 1 | xargs apt install -y**
+```**apt list --upgradable | grep openssh | cut -d '/' -f 1 | xargs apt install -y**```
 
-'''
+```
 root@autentica-plantilla:~# apt list --upgradable | grep openssh | cut -d '/' -f 1 | xargs apt install -y
 
 WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
@@ -427,7 +437,7 @@ Leyendo lista de paquetes... Hecho
 Creando árbol de dependencias... Hecho
 Leyendo la información de estado... Hecho
 0 actualizados, 0 nuevos se instalarán, 0 para eliminar y 0 no actualizados.
-'''
+```
 
 Con esto tendriamos la lista de los paquetes que contienen "openssh" y los actualiza automaticamente.
 
@@ -437,7 +447,7 @@ Con el comando **apt-cache rdepnds <nombre_del_paquete>**
 
 Si lo hacemos como ejemplo, en openssh-client, nos saldra lo siguiente:
 
-'''
+```
 root@autentica-plantilla:~# apt-cache rdepends openssh-client
 openssh-client
 Reverse Depends:
@@ -571,42 +581,42 @@ Reverse Depends:
  |autossh
   apt-dater
  |ansible-core
-'''
+```
 
 13.  ¿Cómo procederías para encontrar el paquete al que pertenece un determinado fichero?
 
-Usando el siguiinet comando **dpkg -S ruta_del_archivo**
+Usando el siguiinet comando ```**dpkg -S ruta_del_archivo**```
 
 
 Ejemplo:
 
-'''
+```
 root@autentica-plantilla:~# dpkg -S /usr/bin/ssh
 openssh-client: /usr/bin/ssh
-'''
+```
 
 14. ¿Que procedimientos emplearías para liberar la caché en cuanto a descargas de paquetería?
 
-- Para limpiar la caché de los paquetes descargados. usaria **apt clean**
+- Para limpiar la caché de los paquetes descargados. usaria ```**apt clean**```
 
-- Para limpiar solo los archivos innecesarios, usaria **apt autoclean**
+- Para limpiar solo los archivos innecesarios, usaria ```**apt autoclean**```
 
 15. Realiza la instalación del paquete keyboard-configuration pasando previamente los valores de los parámetros de configuración como variables de entorno.
 
 Para ello lo que haremso ser acrear una variable de entorno, para que no nos pida permiso de configuracion:
 
-'''
+```
 root@autentica-plantilla:~# DEBIAN_FRONTEND=noninteractive apt install keyboard-configuration
 Leyendo lista de paquetes... Hecho
 Creando árbol de dependencias... Hecho
 Leyendo la información de estado... Hecho
 keyboard-configuration ya está en su versión más reciente (1.221).
 0 actualizados, 0 nuevos se instalarán, 0 para eliminar y 0 no actualizados.
-'''
+```
 
 16. Reconfigura el paquete locales de tu equipo, añadiendo una localización que no exista previamente. Comprueba a modificar las variables de entorno correspondientes para que la sesión del usuario utilice otra localización.
 
-'''
+```
 root@autentica-plantilla:~# dpkg-reconfigure locales
 Generating locales (this might take a while)...
   aa_DJ.UTF-8... done
@@ -618,22 +628,22 @@ Generating locales (this might take a while)...
   af_ZA.ISO-8859-1... done
   agr_PE.UTF-8... done
   ak_GH.UTF-8... done
-'''
+```
 
 Y a la hora de comprobación, pondemos lo siguiente que sera ajustar la sesion del usuario para que use la nueva localización:
 
-'''
+```
 root@autentica-plantilla:~# export LANG=en_US.UTF-8
 root@autentica-plantilla:~# export LC_ALL=en_US.UTF-8
 -bash: aviso: setlocale: LC_ALL: no se puede cambiar el local (en_US.UTF-8)
-'''
+```
 
 
 17. Interrumpe la configuración de un paquete y explica los pasos a dar para continuar la instalación.
 
 Para continuar la instalacion de algún meteremos el siguinet comando:
 
-'''**sudo dpkg --configure -a**'''
+```**sudo dpkg --configure -a**```
 
 esto lo que hace es renaudar cualquier paquete que haya quedado en un estado inconsciente.
 
@@ -642,12 +652,12 @@ esto lo que hace es renaudar cualquier paquete que haya quedado en un estado inc
 
 Usaria esta:
 
-**LA_AMDRE_DEL_TOPO=noninteractive sudo apt full-upgrade -y**
+```**LA_AMDRE_DEL_TOPO=noninteractive sudo apt full-upgrade -y**```
 
 Con esto lo que conseguimos es actualizar los paquetes del sistema sin soliciatr interaccion.
 Verificación:
 
-'''
+```
 root@autentica-plantilla:~# A_AMDRE_DEL_TOPO=noninteractive apt full-upgrade -y
 Reading package lists... Done
 Building dependency tree... Done
@@ -655,48 +665,51 @@ Reading state information... Done
 Calculating upgrade... Done
 0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
 root@autentica-plantilla:~# 
-'''
+```
+
 19. Bloquea la actualización de determinados paquetes.
 
 Para bloquear la actualización de un paquete especifico, usare:
 
-'''**sudo apt-mark hold <nombre_paquete>**'''
+```**sudo apt-mark hold <nombre_paquete>**```
 
 Vamos a comprobarlo con openssh-client, con lo que evitaremos que sea actualizado cuando hagamos unh upgrade.
 
 
 Verificación:
 
-'
+```
 root@autentica-plantilla:~# apt-mark hold openssh-client
 openssh-client set on hold.
 root@autentica-plantilla:~# 
-'
+
+```
 
 # Trabajo con ficheros .deb
 
 1. Descarga un paquete sin instalarlo, es decir, descarga el fichero .deb correspondiente. Indica diferentes formas de hacerlo.
 
-Para descarga un paquete sin instalar, usaremos el comando **apt-get download**
+Para descarga un paquete sin instalar, usaremos el comando ```**apt-get download**```
 
 Ejemplo: 
 
-'''root@autentica-plantilla:~# apt-get download flatpak
+```
+root@autentica-plantilla:~# apt-get download flatpak
 Get:1 http://deb.debian.org/debian bookworm/main amd64 flatpak amd64 1.14.10-1~deb12u1 [1400 kB]
 Fetched 1400 kB in 0s (4468 kB/s)
 W: Download is performed unsandboxed as root as file '/root/flatpak_1.14.10-1~deb12u1_amd64.deb' couldn't be accessed by user '_apt'. - pkgAcquire::Run (13: Permission denied)
-'''
+```
 
-O podemos usar el wget para hacerlo directamente de la URL. **wget URL**
+O podemos usar el wget para hacerlo directamente de la URL. ```**wget URL**```
 
 
 2. ¿Cómo puedes ver el contenido, que no extraerlo, de lo que se instalará en el sistema de un paquete deb?
 
-Usando el comando **dpkg --contents <paquete_en_cuestion>**
+Usando el comando ```**dpkg --contents <paquete_en_cuestion>**```
 
 verificación:
 
-'''
+```
 root@autentica-plantilla:~# dpkg --contents flatpak_1.14.10-1~deb12u1_amd64.deb 
 drwxr-xr-x root/root         0 2024-08-14 16:49 ./
 drwxr-xr-x root/root         0 2024-08-14 16:49 ./etc/
@@ -715,21 +728,27 @@ drwxr-xr-x root/root         0 2024-08-14 16:49 ./usr/bin/
 drwxr-xr-x root/root         0 2024-08-14 16:49 ./usr/lib/
 drwxr-xr-x root/root         0 2024-08-14 16:49 ./usr/lib/systemd/
 drwxr-xr-x root/root         0 2024-08-14 16:49 ./usr/lib/systemd/system-environment-generators/
-'''
+```
 
 3. Sobre el fichero .deb descargado, utiliza el comando ar. ar permite extraer el contenido de una paquete deb. Indica el procedimiento para visualizar con ar el   contenido del paquete deb. Con el paquete que has descargado y utilizando el comando ar, descomprime el paquete. ¿Qué información dispones después de la extracción?. Indica la finalidad de lo extraído e indica el procedimiento para descomprimir lo extraído por ar del punto anterior. ¿Qué información contiene?
 
 - Listar el contenido del .deb
-'''  
+
+```  
 root@autentica-plantilla:~# ar t flatpak_1.14.10-1~deb12u1_amd64.deb
 debian-binary
 control.tar.xz
 data.tar.xz
-'''
+```
+
 - Extraer el contenido del .deb
-'''root@autentica-plantilla:~# ar x flatpak_1.14.10-1~deb12u1_amd64.deb '''
-- ver contenido del control.tar.xz 
-  '''oot@autentica-plantilla:~# tar -xf control.tar.xz
+
+```root@autentica-plantilla:~# ar x flatpak_1.14.10-1~deb12u1_amd64.deb ```
+
+- Ver contenido del control.tar.xz 
+  
+```
+root@autentica-plantilla:~# tar -xf control.tar.xz
 root@autentica-plantilla:~# cat control
 Package: flatpak
 Version: 1.14.10-1~deb12u1
@@ -762,11 +781,11 @@ Description: Application deployment framework for desktop apps
  launch sandboxed applications, and the portal services needed to provide
  limited access to resources outside the sandbox.
 root@autentica-plantilla:~# 
-'''
+```
 
 - Ver contenido del data
 
-'''
+```
 root@autentica-plantilla:~# tar -xf data.tar.xz
 root@autentica-plantilla:~# ls -l
 total 3764
@@ -787,7 +806,122 @@ drwxr-xr-x 3 root root    4096 Aug 14 16:49 lib
 drwxr-xr-x 6 root root    4096 Aug 14 16:49 usr
 drwxr-xr-x 3 root root    4096 Aug 14 16:49 var
 root@autentica-plantilla:~# 
-'''
+```
 
 
-Esto lo que nos muetra es el contenido .deb que hemos extradio, cada archivo y directorio que podemos ver tiene una función especifica denrtro del paquete.
+Esto lo que nos muetra es el **contenido .deb** que hemos extradio, cada archivo y directorio que podemos ver tiene una función especifica denrtro del paquete.
+
+# Trabajo con repositorios
+
+1. Añade a tu fichero sources.list los repositorios de bullseye-backports y sid.
+
+Para añadir repos, hay que editar el siguiente fichero ``` /etc/apt/sources.list ``` en el cial le añadiremos las siguietes lineas:
+
+- ```deb http://deb.debian.org/debian bullseye-backports main contrib non-free```
+- ```deb http://deb.debian.org/debian sid main contrib non-free```
+  
+Con esto lo que haremos es que usen los repositorios, que le hemos establecido.
+
+
+2. Configura el sistema APT para que los paquetes de debian bullseye tengan mayor prioridad y por tanto sean los que se instalen por defecto.
+3. Configura el sistema APT para que los paquetes de bullseye-backports tengan mayor prioridad que los de unstable.
+Para establecer lo que es una jerarquia de prioridades, vamos a crear un nuevo fichero para eso lo que hacer sera abrir un editor, en mi caso sera **nano** y donde pondre el siguiente directroio:
+
+```sudo nano /etc/apt/preferences.d/torojo```
+
+Y donde pegare lo siguiente:
+
+```
+Package: *
+Pin: release n=bullseye
+Pin-Priority: 900
+```
+>[!ATENTION]
+
+>**Package: ***
+>Esto significa que la regla se aplica a todos los paquetes. El asterisco (*) actúa como un comodín que incluye todos los paquetes disponibles en los repositorios.
+
+>Pin: release n=bullseye
+>Aquí se especifica que la regla se aplica a los paquetes que provienen de la versión "bullseye".
+
+>Pin-Priority: 900
+>Esta línea establece la prioridad de los paquetes que coinciden con las condiciones anteriores.
+
+
+
+
+4. ¿Cómo añades la posibilidad de descargar paquetería de la arquitectura i386 en tu sistema. ¿Que comando has empleado?. Lista arquitecturas no nativas. ¿Cómo procederías para desechar la posibilidad de descargar paquetería de la arquitectura i386?
+- **Añadir arquitectura i386**
+```sudo dpkg --add-architecture i386``` 
+
+- **Listar las arquitecturas no nativas**
+```dpkg --print-foreign-architectures``` 
+
+- Verificación:
+
+```
+root@autentica-plantilla:~# dpkg --print-foreign-architectures
+i386
+```
+
+5. Si quisieras descargar un paquete, ¿cómo puedes saber todas las versiones disponible de dicho paquete?
+Metiendo el siguiente comando, y reemplazar el nombre del paquete:
+
+```apt-cache policy nombre_del_paquete```
+
+6. Indica el procedimiento para descargar un paquete del repositorio stable.
+
+Para desacar un paque del repo stable, usaremos:
+
+```
+sudo apt install nombre_del_paquete
+```
+
+Con esto lo que haremos será instalar la ultima versión.
+
+7. Indica el procedimiento para descargar un paquete del repositorio de bookworm-backports.
+
+Para la descarga especifica de un paquete de **bookworm-backports**, usaremos lo siguiente:
+
+```
+sudo apt -t bookworm-backports install nombre_del_paquete
+```
+8. Indica el procedimiento para descargar un paquete del repositorio de sid.
+
+Descarga de un paquete de **sid**
+
+```
+sudo apt -t unstable install nombre_del_paquete
+
+```
+
+9. Indica el procedimiento para descargar un paquete de arquitectura i386.
+
+Para instalar un paquete de arquitectura i386, utiliza el siguiente comando:
+
+```
+sudo apt install nombre_del_paquete:i386
+
+``` 
+
+# Trabajar con directorios
+
+- /var/lib/apt/lists/
+  
+    - Contenido: Se almacenan archivos que representan las listas de paquetes descargadas desde los repositorios. Cada archivo dentro de este directorio corresponde a un repositorio y contiene información sobre los paquetes disponibles, sus versiones, dependencias, etc.
+
+- /var/lib/dpkg/available
+
+    - Contenido: Incluye detalles sobre cada paquete, como nombre, versión, descripción y dependencias. Es similar a la información en /var/lib/apt/lists/, pero no está limitada a los repositorios actualmente habilitados.
+
+- /var/lib/dpkg/status
+
+    - Contenido: Contiene información sobre cada paquete instalado, como su nombre, versión instalada, estado (si está instalado, configurado, etc.), y otras propiedades.
+
+- /var/cache/apt/archives/
+
+    - Contenido: Contiene los paquetes .deb que APT ha descargado y que están listos para ser instalados. Esto incluye tanto paquetes descargados manualmente como aquellos necesarios para cumplir con las dependencias de otros paquetes.
+
+- /var/log/apt/history.log
+
+    - Contenido: Incluye información sobre todas las instalaciones, actualizaciones y eliminaciones de paquetes que se han llevado a cabo. Proporciona un registro detallado con fechas y acciones realizadas.
