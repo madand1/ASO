@@ -334,3 +334,12 @@ madandy@toyota-hilux:~/kernel$ ls -l /boot/ | grep 6.11.5
 madandy@toyota-hilux:~/kernel$ 
 
 ```
+
+Ahora lo qu etebndremos que hacer es iniciar y ver si lo ha instalado , y efectivamente lo tenemos instalado:
+
+```
+madandy@toyota-hilux:~$ uname -r
+6.11.5
+madandy@toyota-hilux:~$ 
+
+```
