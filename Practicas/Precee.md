@@ -823,4 +823,4 @@ Tenemos un error, el cual no me explico ya que tengo tanto el isc , como el ftpe
 
 ![error](image-10.png)
 
-por lo que no he podido completar satisfactoriamente la práctica, tal y como se esperaba.
+por lo que no he podido completar satisfactoriamente la práctica, tal y como se esperaba,esto se debe a que al tener la gráfica intel, se necesitan descativar ciertos módulos, pero estos aunque los tenga descativados, me siguen dando error en el mismo punto.
