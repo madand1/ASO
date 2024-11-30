@@ -1,0 +1,135 @@
+##############################################################################
+#   Instalación automatizada de Debian con particiones LVM usando todo el disco
+##############################################################################
+
+# Configuración de idioma y localización
+d-i debian-installer/locale string es_ES
+d-i debian-installer/language string spanish
+d-i debian-installer/country string Spain
+d-i debian-installer/locale string es_ES.UTF-8
+d-i localechooser/supported-locales es_ES.UTF-8
+
+# Configuración del teclado
+d-i keyboard-configuration/toggle select No toggling
+d-i keymap select es
+d-i console-setup/ask_detect boolean true
+d-i keyboard-configuration/modelcode string pc105
+d-i keyboard-configuration/layoutcode string es
+d-i keyboard-configuration/variantcode string qwerty
+
+# Configuración de red
+d-i netcfg/choose_interface select auto
+
+# Creación del usuario y superusuario
+d-i passwd/root-password password usuario
+d-i passwd/root-password-again password usuario
+d-i passwd/user-fullname string usuario
+d-i passwd/username string usuario
+d-i passwd/user-password password usuario
+d-i passwd/user-password-again password usuario
+
+# Configuración del nombre de host y dominio
+d-i netcfg/get_hostname string debian
+d-i netcfg/get_domain string
+d-i hw-detect/load_firmware boolean false
+
+# Configuración de zona horaria
+d-i clock-setup/utc boolean true
+d-i time/zone string ES/Madrid
+d-i clock-setup/ntp boolean true
+
+# Configuración de los repositorios Debian
+d-i mirror/country string manual
+d-i mirror/http/hostname string ftp.es.debian.org
+d-i mirror/http/directory string /debian
+d-i mirror/http/proxy string
+
+# Desactivar la participación en la encuesta
+popularity-contest popularity-contest/participate boolean false
+
+# Configuración de particiones
+
+# Usar todo el espacio disponible en LVM sin preguntar al usuario
+d-i partman-auto/method string lvm
+d-i partman-lvm/device_remove_lvm boolean true  # Eliminar LVM si ya está presente
+d-i partman-lvm/confirm boolean true
+d-i partman-lvm/confirm_nooverwrite boolean true
+
+# Configuración de particionamiento
+d-i partman-auto/disk string /dev/vda
+d-i partman-lvm/device_remove_lvm boolean true
+d-i partman-auto/method string lvm
+d-i partman-lvm/confirm boolean true
+d-i partman-auto/choose_recipe select mypartitioning
+d-i partman-auto-lvm/new_vg_name string vg00
+d-i partman-auto-lvm/guided_size string max
+d-i partman-lvm/confirm_nooverwrite boolean true
+
+# Esquema de particionamiento personalizado
+d-i partman-auto/expert_recipe string \
+      mypartitioning :: \
+              512 1 512 xfs \
+                      $primary{ } $bootable{ } \
+                      method{ format } format{ } \
+                      use_filesystem{ } filesystem{ xfs } \
+                      mountpoint{ /boot } \
+              . \
+              1024 1 1024 linux-swap \
+                      $defaultignore{ } \
+                      $lvmok{ } \
+                      lv_name{ swap } \
+                      in_vg { vg00 } \
+                      method{ swap } format{ } \
+              . \
+              3072 1 3072 xfs \
+                      $defaultignore{ } \
+                      $lvmok{ } \
+                      lv_name{ root } \
+                      in_vg { vg00 } \
+                      method{ format } format{ } \
+                      use_filesystem{ } filesystem{ xfs } \
+                      mountpoint{ / } \
+              . \
+              6144 1 6144 xfs \
+                      $defaultignore{ } \
+                      $lvmok{ } \
+                      lv_name{ var } \
+                      in_vg { vg00 } \
+                      method{ format } format{ } \
+                      use_filesystem{ } filesystem{ xfs } \
+                      mountpoint{ /var } \
+              . \
+              8192 1 1000000000 xfs \
+                      $defaultignore{ } \
+                      $lvmok{ } \
+                      lv_name{ home } \
+                      in_vg { vg00 } \
+                      method{ format } format{ } \
+                      use_filesystem{ } filesystem{ xfs } \
+                      mountpoint{ /home } \
+              .
+
+# Confirmación de escritura de nueva etiqueta de partición
+d-i partman-partitioning/confirm_write_new_label boolean true
+d-i partman/choose_partition select finish
+d-i partman/confirm boolean true
+d-i partman/confirm_nooverwrite boolean true
+
+
+
+#Análisis de medios adicionales
+d-i apt-setup/cdrom/set-first boolean false
+d-i apt-setup/cdrom/set-next boolean false
+d-i apt-setup/cdrom/set-failed boolean false
+
+
+# Instalación de GRUB
+d-i grub-installer/only_debian boolean true
+d-i grub-installer/with_other_os boolean false
+d-i grub-installer/bootdev string default
+
+# Selección de paquetes
+tasksel tasksel/first multiselect standard, ssh-server
+
+# Finalización de la instalación
+d-i finish-install/reboot_in_progress note
