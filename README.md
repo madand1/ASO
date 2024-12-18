@@ -6,3 +6,9 @@
 - [2. Compilación Kernel](./Practicas/Compilacion_kernel_linux.md)
 - [3. Preseed](./Practicas/Precee.md)
 - [4. Convulsión en el mundo de Open Source](convulsion/documento-convulsion.md)
+- [5. Inmutabilidad en Sistemas Operativos](./Practicas/Inmutabilidad.md)
+
+
+## Autor :computer:
+* Andrés Morales González
+* :school:I.E.S. Gonzalo Nazareno :round_pushpin:(Dos Hermanas, Sevilla).
