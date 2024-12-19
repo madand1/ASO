@@ -64,6 +64,17 @@ Para probar estas distribuciones en una máquina virtual, puedes seguir estos pa
 - **Actualización**: Se realiza con el comando `transactional-update`, que asegura que la actualización se realice de forma segura y que el sistema continúe funcionando sin problemas.
 - **Instalación de aplicaciones**: Se pueden usar contenedores o paquetes como Flatpak, pero no se modifican directamente los archivos del sistema operativo.
 
+![Actualización](image-11.png)
+
+![Instalación](image-12.png)
+
+- ```transactional-update pkg install```: Este comando instala paquetes dentro de una transacción aislada.
+
+- ***Reinicio necesario***: Los cambios se aplican solo después del reinicio porque se implementan en un sistema de archivos raíz en modo de sólo lectura hasta entonces.
+
+Y como podemos ver, ya estaria instalado y en ejecución:
+
+![Htop en ejecución](image-13.png)
 ### En RedHat CoreOS:
 - **Actualización**: Se utiliza `rpm-ostree`, lo que garantiza actualizaciones atómicas y una gestión eficiente de las versiones del sistema operativo.
 - **Instalación de aplicaciones**: Al igual que en openSUSE MicroOS, las aplicaciones se instalan en contenedores o utilizando Kubernetes.
