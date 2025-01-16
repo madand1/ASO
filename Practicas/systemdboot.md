@@ -167,3 +167,198 @@ UNa vez de dentro comprobamos que es el sistema operativo que hemos elegido y ap
 
 
 ![alt text](tree.png)
+
+
+## Sustitucion del grub mi villano favorito 
+
+**Systemd-boot:**
+**Ventajas**
+**Simplicidad y Ligereza:**
+Systemd-boot es conocido por ser más ligero y simple en comparación con GRUB. Su diseño minimalista puede resultar en tiempos de arranque más rápidos y menor uso de recursos.
+
+**Integración con Systemd:**
+systemd-boot está diseñado para integrarse estrechamente con systemd, lo que puede facilitar la configuración y la administración del sistema, especialmente en entornos donde systemd se utiliza de manera integral.
+
+**Arranque Rápido:**
+systemd-boot tiende a tener tiempos de arranque más rápidos en comparación con GRUB. Esto puede ser beneficioso para aquellos que valoran un arranque rápido del sistema.
+
+**Desventajas**
+**Menos Flexibilidad**:
+systemd-boot es más simple y puede carecer de algunas características avanzadas que ofrece GRUB. Podría ser menos versátil para usuarios que necesitan una configuración altamente personalizada. Además este solo trabaja con sistemas EFI
+
+**Compatibilidad con Sistemas Múltiples:**
+GRUB es conocido por gestionar múltiples sistemas operativos en un solo menú de arranque, mientras que systemd-boot puede requerir configuración manual adicional para manejar sistemas operativos múltiples.
+
+**GRUB:**
+**Ventajas**
+**Gestión de Arranque Multisistema:**
+GRUB es conocido por su capacidad para gestionar múltiples sistemas operativos en un solo menú de arranque. Es útil en sistemas con instalaciones duales o múltiples sistemas operativos.
+
+**Configuración Avanzada:**
+GRUB ofrece opciones de configuración avanzadas que permiten a los usuarios personalizar detalladamente el proceso de arranque. Esto es beneficioso para aquellos que necesitan un control preciso sobre la configuración del arranque.
+
+
+**Desventajas**
+
+**Complejidad para Usuarios Novatos:**
+La configuración avanzada de GRUB puede resultar complicada para usuarios novatos. Aquellos no familiarizados con la edición manual de archivos de configuración pueden encontrar que GRUB es menos accesible.
+
+**Tiempo de Arranque Prolongado:**
+En comparación con gestores de arranque más ligeros como systemd-boot, GRUB puede tener tiempos de arranque más prolongados.
+
+### COnclusión 
+
+La elección entre systemd-boot y GRUB dependerá de las necesidades y preferencias específicas del usuario. Si se busca simplicidad y ligereza, systemd-boot puede ser una opción adecuada. Si se necesitan funciones avanzadas y una gestión más compleja, GRUB podría ser la elección preferida.
+
+Para hacer la migración del gestor de arranque grub a systemd-boot estaré usando una maquina virtual con Debian 12.
+
+Tenemos el siguiente esquema de particiones:
+
+```
+root@rositapalotes:/boot/efi/loader# lsblk -f
+NAME   FSTYPE FSVER LABEL UUID                                 FSAVAIL FSUSE% MOUNTPOINTS
+sr0                                                                           
+vda                                                                           
+├─vda1 vfat   FAT32       7D41-E7C3                             422,6M    17% /boot/efi
+├─vda2 ext4   1.0         cdec436a-8241-4867-826a-59c7c6eaa47a   15,4G    10% /
+└─vda3 swap   1           91024c17-06cf-412e-9d3d-180ff3a69554                [SWAP]
+
+```
+
+```
+sudo apt install systemd-boot
+```
+```
+root@rositapalotes:/boot/efi/loader# tree
+.
+├── entries
+│   ├── 5c8af615a2b64be1807e5add71874605-6.1.0-25-amd64.conf
+│   └── 5c8af615a2b64be1807e5add71874605-6.1.0-30-amd64.conf
+├── entries.srel
+├── loader.conf
+└── random-seed
+
+```
+A continuación ejecutaremos el siguiente comando:
+
+```
+sudo bootctl install
+```
+
+```
+root@rositapalotes:/boot/efi/loader# sudo bootctl install
+Copied "/usr/lib/systemd/boot/efi/systemd-bootx64.efi" to "/boot/efi/EFI/systemd/systemd-bootx64.efi".
+Copied "/usr/lib/systemd/boot/efi/systemd-bootx64.efi" to "/boot/efi/EFI/BOOT/BOOTX64.EFI".
+Random seed file /boot/efi/loader/random-seed successfully written (32 bytes).
+Not installing system token, since we are running in a virtualized environment.
+Created EFI boot entry "Linux Boot Manager".
+```
+Vamos a editar el fichero loader.conf el cual se encuentra en el directorio que hemos comentado antes. En este fichero definimos las opciones de arranque del cargador. Habrá que insertar el siguiente contenido:
+
+Antes:
+```
+root@rositapalotes:/boot/efi/loader# cat loader.conf 
+#timeout 3
+#console-mode keep
+default 5c8af615a2b64be1807e5add71874605-*
+
+```
+
+Después:
+
+```
+root@rositapalotes:/boot/efi/loader# cat loader.conf 
+timeout 3
+console-mode keep
+editor yes
+default debian.conf
+```
+
+Podemos comprobar que hemos especificado el fichero debian.conf, este fichero habrá que crearlo manualmente a continuación y será nuestra entrada por defecto. Todas las entradas del cargador de arranque serán definidas en el directorio ``/boot/efi/loader/entries ``como ficheros ``.conf``:
+
+Contenido ``debian.conf``:
+
+```
+root@rositapalotes:/boot/efi/loader/entries# cat debian.conf 
+title rosita
+linux      /8840d60ae04a4d0e8e5670011af9c744/6.1.0-17-amd64/linux
+initrd     /8840d60ae04a4d0e8e5670011af9c744/6.1.0-17-amd64/initrd.img-6.1.0-17-amd64
+options    root=UUID=cdec436a-8241-4867-826a-59c7c6eaa47a rw
+
+```
+
+Donde:
+
+
+- Title: Título de la entrada que veremos en el arranque.
+- Linux: Ruta de la imagen del kernel que vamos a iniciar, partiendo del directorio /boot/efi.
+- Initrd: Ruta de la imagen initrd que vamos a iniciar, partiendo del directorio /boot/efi.
+- Options: Partición raíz que se montará. En esta debemos especificar el UUID de la partición (Podemos obtenerlo con el comando blkid). Aquí también podemos definir las opciones de montaje, en mi caso rw, para lectura y escritura.
+
+También crearé otra entrada para la Shell EFI:
+
+```
+root@rositapalotes:/boot/efi/loader/entries# cat shellefi.conf 
+title EFI Shell
+efi /EFI/shellx64.efi
+
+```
+
+El firmware [shellx64](https://packages.debian.org/sid/all/efi-shell-x64/filelist) e instalamos con ``dpkg -i``
+
+```
+root@rositapalotes:/boot/efi/loader/entries# wget https://packages.debian.org/sid/all/efi-shell-x64/filelist
+--2025-01-16 18:04:29--  https://packages.debian.org/sid/all/efi-shell-x64/filelist
+Resolviendo packages.debian.org (packages.debian.org)... 2a02:16a8:dc41:100::132, 2603:400a:ffff:bb8::801f:33, 128.31.0.51, ...
+Conectando con packages.debian.org (packages.debian.org)[2a02:16a8:dc41:100::132]:443... conectado.
+Petición HTTP enviada, esperando respuesta... 200 OK
+Longitud: no especificado [text/html]
+Grabando a: «filelist»
+
+filelist                           [ <=>                                                 ]   5,06K  --.-KB/s    en 0s      
+
+```
+Esto me ha bajado el .html por lo que no esta, y no puedo seguir con la práctica...
+
+pero si no se haria lo siguiente:
+
+
+Una vez hecho eso debemos desactivar el Secure Boot, podemos hacerlo desde la BIOS o bien ejecutando el comando:
+
+```
+root@rositapalotes:/boot/efi/loader/entries# sudo mokutil --disable-validation
+password length: 8~16
+input password: 
+password should be 8~16 characters
+input password: 
+input password again: 
+
+```
+
+Una vez hecho esto, actualizaremos el gestor de arranque SystemdBoot:
+
+```
+root@rositapalotes:/boot/efi/loader/entries# sudo bootctl update
+Skipping "/boot/efi/EFI/systemd/systemd-bootx64.efi", since same boot loader version in place already.
+Skipping "/boot/efi/EFI/BOOT/BOOTX64.EFI", since same boot loader version in place already.
+
+```
+
+Ahora compruebo, elorden de arranque con ``efibootmgr``
+
+```
+root@rositapalotes:~# efibootmgr 
+BootCurrent: 0004
+Timeout: 0 seconds
+BootOrder: 0001,0004,0002,0000,0003
+Boot0000* UiApp
+Boot0001* Linux Boot Manager
+Boot0002* UEFI Misc Device
+Boot0003* EFI Internal Shell
+Boot0004* debian
+
+```
+
+El primero debe ser Linux Boot Manager, podemos cambiar el orden con **efibootmgr -o XXXX**
+
+Y una vez moviendolo etsaria hecha.
