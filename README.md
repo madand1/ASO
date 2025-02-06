@@ -9,6 +9,7 @@
 - [5. Inmutabilidad en Sistemas Operativos](./Practicas/Inmutabilidad.md)
 - [6. systemd/sshfs](./Practicas/systemd.md)
 - [7. System boot](./Practicas/systemdboot.md)
+- [8. Recolección](./Jorunald/Recoleccion.md)
 
 ## Autor :computer:
 * Andrés Morales González
