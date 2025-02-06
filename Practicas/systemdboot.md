@@ -300,22 +300,25 @@ También crearé otra entrada para la Shell EFI:
 ```
 root@rositapalotes:/boot/efi/loader/entries# cat shellefi.conf 
 title EFI Shell
-efi /EFI/shellx64.efi
+loader /EFI/Shellx64.efi
+
 
 ```
 
-El firmware [shellx64](https://packages.debian.org/sid/all/efi-shell-x64/filelist) e instalamos con ``dpkg -i``
+El firmware [shellx64](https://github.com/holoto/efi_shell_flash_bios/blob/master/Shellx64.efi) e instalamos con ``dpkg -i``
 
 ```
-root@rositapalotes:/boot/efi/loader/entries# wget https://packages.debian.org/sid/all/efi-shell-x64/filelist
---2025-01-16 18:04:29--  https://packages.debian.org/sid/all/efi-shell-x64/filelist
-Resolviendo packages.debian.org (packages.debian.org)... 2a02:16a8:dc41:100::132, 2603:400a:ffff:bb8::801f:33, 128.31.0.51, ...
-Conectando con packages.debian.org (packages.debian.org)[2a02:16a8:dc41:100::132]:443... conectado.
+root@rositapalotes:/boot/efi/loader/entries# wget https://github.com/holoto/efi_shell_flash_bios/blob/master/Shellx64.efi
+--2025-01-16 18:40:12--  https://github.com/holoto/efi_shell_flash_bios/blob/master/Shellx64.efi
+Resolviendo github.com (github.com)... 140.82.121.4
+Conectando con github.com (github.com)[140.82.121.4]:443... conectado.
 Petición HTTP enviada, esperando respuesta... 200 OK
 Longitud: no especificado [text/html]
-Grabando a: «filelist»
+Grabando a: «Shellx64.efi»
 
-filelist                           [ <=>                                                 ]   5,06K  --.-KB/s    en 0s      
+Shellx64.efi                       [ <=>                                                 ] 223,53K  1,22MB/s    en 0,2s    
+
+2025-01-16 18:40:13 (1,22 MB/s) - «Shellx64.efi» guardado [228894]
 
 ```
 Esto me ha bajado el .html por lo que no esta, y no puedo seguir con la práctica...
