@@ -11,6 +11,10 @@
 - [7. System boot](./Practicas/systemdboot.md)
 - [8. Recolección](./Jorunald/Recoleccion.md)
 
+# En proceso
+- [9. Configuración/activación de SELinux](./SELINUX.md/selinux.md)
+- [10. Instalación y configuración inicial de OpenLDAP](./LDAP/LDAP.md)
+
 ## Autor :computer:
 * Andrés Morales González
 * :school:I.E.S. Gonzalo Nazareno :round_pushpin:(Dos Hermanas, Sevilla).

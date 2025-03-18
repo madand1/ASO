@@ -1,0 +1,3 @@
+# Enunciado
+
+En un servidor basado en Rocky Linux con SELinux activado en modo enforcing, asegúrate que los servicios sshfs, samba y nfs funcionan correctamente y no hay problemas de acceso con una configuración estricta y segura de SELinux. Habilita inicio de sesión de root en el acceso remoto al servidor Rocky, teniendo como nuevo puerto de acceso el no habitual en ssh. Realiza las pruebas de acceso correspondientes.
