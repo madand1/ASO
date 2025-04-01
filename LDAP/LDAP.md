@@ -691,6 +691,17 @@ tmpfs                  197M     0  197M   0% /run/user/1001
 192.168.0.1:/home/nfs   15G  5.3G  8.7G  38% /home/nfs
 andy@sanji:~$ 
 ```
+
+Y para que podamos entar en los usuarios pertinentes desde el cliente al servidor **LDAP**, tendremos que instalar el siguiente paquete:
+
+```bash
+root@sanji:/home/andy# sudo apt install libnss-ldapd -y
+```
+
+Y en la siguiente imagen podemos corroborar que hemos podido entrar:
+
+![Entrada inminente](LDAP.png)
+
 ## Cliente Rocky
 
 Lo primero que necesitamos hacer es instalar el paquete openldap-clients junto con otros paquetes necesarios para que podamos conectarnos al servidor LDAP y verificar que todo funcione correctamente. Para ello, ejecutamos el siguiente comando:
