@@ -10,10 +10,11 @@
 - [6. systemd/sshfs](./Practicas/systemd.md)
 - [7. System boot](./Practicas/systemdboot.md)
 - [8. Recolección](./Jorunald/Recoleccion.md)
+- [9. Configuración/activación de SELinux](./SELINUX.md/selinux.md)
 - [10. Instalación y configuración inicial de OpenLDAP](./LDAP/LDAP.md)
 
-# En proceso
-- [9. Configuración/activación de SELinux](./SELINUX.md/selinux.md)
+
+
 
 ## Autor :computer:
 * Andrés Morales González
