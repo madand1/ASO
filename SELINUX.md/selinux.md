@@ -534,3 +534,7 @@ root@10.0.0.87:/home/rocky/compartir   39G  1.7G   38G   5% /home/rocky/montaje
 ```
 
 Con esto, confirmamos que tanto NFS como Samba como SSHFS están configurados correctamente y permiten el acceso a los archivos compartidos entre servidor y cliente.
+
+# Bibliografia
+
+[RedHat](https://www.redhat.com/es/topics/linux/what-is-selinux)
